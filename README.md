@@ -1,4 +1,4 @@
-<h1 align="center">Vulcan Open Source</h1>
+<h1 align="center">Vulcan Open Source 2.9.7.29</h1>
 
 https://discord.gg/skidsolutions
 
