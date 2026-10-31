@@ -2,7 +2,7 @@
 
 From version 2.9.7.28
 ---
-Please fork and download this before a DMCA takedown!
+Please download this before a DMCA takedown!
 
 <p align="center">
   <img src="deobf.jpg" height="300" alt="deobf" />&nbsp;&nbsp;<img src="hack.jpg" height="300" alt="hack" />
