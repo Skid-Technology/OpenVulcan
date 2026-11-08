@@ -9,7 +9,6 @@ Please download this before a DMCA takedown!
 </p>
 
 This source is only for educational and research purposes, we are NOT afiliated with Vulcan AntiCheat, all credits to frap and other Vulcan devs for making this wonderful AntiCheat.
-Also, this is not GUARANTEED to work exactly like the original Vulcan AntiCheat because of minor bugs
 
 ## Build
 
