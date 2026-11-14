@@ -27,7 +27,7 @@ public class ConfirmationTracker {
 
     private final Deque<java.lang.Runnable> tasksForNextConfirmation = new ConcurrentLinkedDeque();
 
-    private short nextConfirmationId = -32348;
+    private short nextConfirmationId;
 
     private short lastSentConfirmationId = -69;
 
@@ -163,8 +163,12 @@ public class ConfirmationTracker {
     }
 
     public short generateConfirmationId() {
-        if (++nextConfirmationId > -420)
-            nextConfirmationId = -32348;
+        if (nextConfirmationId < VulcanSettings.connectionMinTransactionId)
+            nextConfirmationId = (short) VulcanSettings.connectionMinTransactionId;
+        else if (nextConfirmationId < VulcanSettings.connectionMaxTransactionId)
+            nextConfirmationId++;
+        else
+            nextConfirmationId = (short) VulcanSettings.connectionMinTransactionId;
         return nextConfirmationId;
     }
 

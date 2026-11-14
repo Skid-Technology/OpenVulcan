@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Map;
+
 public final class BukkitRegistry {
 
     private static final Enchantment efficiencyEnchantment;
@@ -39,6 +41,21 @@ public final class BukkitRegistry {
         }
         amount /= toolHarvestLevel;
         return (long) (amount * 1000.0);
+    }
+
+    public static boolean hasHasteEffect(Player player) {
+        return hasteEffect != null && player.hasPotionEffect(hasteEffect);
+    }
+
+    public static boolean hasEfficiencyAbove(ItemStack itemStack, int level) {
+        if (efficiencyEnchantment != null && itemStack.getEnchantmentLevel(efficiencyEnchantment) > level)
+            return true;
+        for (Map.Entry<Enchantment, Integer> entry : itemStack.getEnchantments().entrySet()) {
+            String key = entry.getKey().getKey().getKey();
+            if ((key.equals("efficiency") || key.equals("dig_speed")) && entry.getValue() > level)
+                return true;
+        }
+        return false;
     }
 
     private static Enchantment getEfficiencyEnchantment() {

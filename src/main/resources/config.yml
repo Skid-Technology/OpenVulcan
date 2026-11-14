@@ -140,8 +140,12 @@ client-brand-alerts:
 
 connection:
   debug-messages: false
-  ignore-ids-over-0: false
-  other-anticheat-support: false
+  other-anticheat-support: true
+  # Max/min transaction id. Don't touch if you don't know what you are doing you will break things. Configure to allow compatability with other
+  # anticheats to not clash with eachother's transactions and keep them in their own ranges. Minimum must be smaller than maximum, it will increment
+  # by one from the minimum towards the maximum and then reset to the minimum when the maximum is reached.
+  min-transaction-id: -32758
+  max-transaction-id: -420
   invalid:
     # The player sent a reply for a confirmation packet that we did not send (impossible). Kick the player.
     # This should never false unless there is a plugin incompatability. No, you cannot disable it and we will not

@@ -18,8 +18,8 @@ public class McMmoAbilityListener implements Listener {
         Player player2 = mcMMOPlayerAbilityActivateEvent.getPlayer();
         PlayerDataStore playerDataStore = PluginServices.INSTANCE.getPlayerDataStore();
         PlayerData playerData = playerDataStore.getPlayerData(player2);
-        if (playerData != null && mcMMOPlayerAbilityActivateEvent.getAbility() == SuperAbilityType.BERSERK) {
-        }
+        if (playerData != null && mcMMOPlayerAbilityActivateEvent.getAbility() == SuperAbilityType.BERSERK)
+            playerData.getMotionState().setBerserk(true);
     }
 
     @EventHandler
@@ -27,7 +27,7 @@ public class McMmoAbilityListener implements Listener {
         Player player2 = mcMMOPlayerAbilityDeactivateEvent.getPlayer();
         PlayerDataStore playerDataStore = PluginServices.INSTANCE.getPlayerDataStore();
         PlayerData playerData = playerDataStore.getPlayerData(player2);
-        if (playerData != null && mcMMOPlayerAbilityDeactivateEvent.getAbility() == SuperAbilityType.BERSERK) {
-        }
+        if (playerData != null && mcMMOPlayerAbilityDeactivateEvent.getAbility() == SuperAbilityType.BERSERK)
+            playerData.getMotionState().setBerserk(false);
     }
 }

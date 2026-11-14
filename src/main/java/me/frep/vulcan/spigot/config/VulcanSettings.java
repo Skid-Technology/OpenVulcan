@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import me.frep.vulcan.spigot.check.CheckSettingsLoader;
 import me.frep.vulcan.spigot.check.data.CheckData;
@@ -573,8 +575,6 @@ public final class VulcanSettings {
 
     public static boolean connectionOtherAnticheatSupport;
 
-    public static boolean connectionIgnoreIdsOver0;
-
     public static boolean settingsDontRegisterGeyser;
 
     public static boolean settingsTestingStuff;
@@ -731,6 +731,10 @@ public final class VulcanSettings {
 
     public static int connectionMaxSizeAmount;
 
+    public static int connectionMinTransactionId;
+
+    public static int connectionMaxTransactionId;
+
     public static double checksMovementBoatflyAMaxSpeed;
 
     public static double checksMovementElytraAMaxSpeed;
@@ -772,6 +776,10 @@ public final class VulcanSettings {
     public static double ghostBlocksFixMinimumTps;
 
     public static double checksMovementEntityspeedAMinDifference;
+
+    private static final int DEFAULT_MIN_TRANSACTION_ID = -32758;
+
+    private static final int DEFAULT_MAX_TRANSACTION_ID = -420;
 
     private static VulcanConfig vulcanConfig;
 
@@ -1156,7 +1164,7 @@ public final class VulcanSettings {
         connectionMaxSizeConsoleAlertMessage = getString("connection.max-size.console-alert-message");
         connectionMaxSizeKickMessage = getString("connection.max-size.kick-message");
         connectionOtherAnticheatSupport = getBoolean("connection.other-anticheat-support");
-        connectionIgnoreIdsOver0 = getBoolean("connection.ignore-ids-over-0");
+        loadTransactionIdRange();
         settingsDontRegisterGeyser = getBoolean("settings.dont-register-geyser");
         settingsTestingStuff = getBoolean("settings.testing-stuff");
         cancelHitsEnabledForAllChecks = getBoolean("cancel-hits.enabled-for-all-checks");
@@ -1164,6 +1172,35 @@ public final class VulcanSettings {
         cancelHitsCancelEvent = getBoolean("cancel-hits.cancel-event");
         cancelHitsChecks = getStringList("cancel-hits.checks").stream().map(VulcanSettings::normalizeCheckName).collect(Collectors.toList());
         CheckSettingsLoader.loadCheckSettings();
+    }
+
+    private static void loadTransactionIdRange() {
+        int configuredMin = getInt("connection.min-transaction-id", DEFAULT_MIN_TRANSACTION_ID);
+        int configuredMax = getInt("connection.max-transaction-id", DEFAULT_MAX_TRANSACTION_ID);
+        int min = clampTransactionId(configuredMin);
+        int max = clampTransactionId(configuredMax);
+        if (min >= max) {
+            min = DEFAULT_MIN_TRANSACTION_ID;
+            max = DEFAULT_MAX_TRANSACTION_ID;
+        }
+        connectionMinTransactionId = min;
+        connectionMaxTransactionId = max;
+        Logger logger = PluginServices.INSTANCE.getVulcanPlugin().getLogger();
+        if (configuredMin != min || configuredMax != max) {
+            logger.warning("[Vulcan] Corrected transaction ID range from [" + configuredMin + ", " + configuredMax + "] to [" + min + ", " + max + "].");
+            vulcanConfig.set("connection.min-transaction-id", min);
+            vulcanConfig.set("connection.max-transaction-id", max);
+            try {
+                save();
+            } catch (RuntimeException exception) {
+                logger.log(Level.WARNING, "[Vulcan] Could not save the corrected transaction ID range.", exception);
+            }
+        }
+        logger.info("Using transaction ID range [" + min + ", " + max + "].");
+    }
+
+    private static int clampTransactionId(int value) {
+        return Math.max(-32768, Math.min(-1, value));
     }
 
     public static boolean getBoolean(String text) {
@@ -1176,6 +1213,10 @@ public final class VulcanSettings {
 
     public static int getInt(String text) {
         return vulcanConfig.getInt(text);
+    }
+
+    public static int getInt(String text, int def) {
+        return vulcanConfig.getInt(text, def);
     }
 
     public static double getDouble(String text) {

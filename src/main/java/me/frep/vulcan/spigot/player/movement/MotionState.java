@@ -71,6 +71,10 @@ public class MotionState {
 
     private boolean slownessEffect;
 
+    private boolean conduitPowerEffect;
+
+    private boolean berserk;
+
     private boolean depthStrider;
 
     private boolean wearingElytra;
@@ -822,6 +826,18 @@ public class MotionState {
         return this.slownessEffect;
     }
 
+    public boolean isConduitPowerEffect() {
+        return this.conduitPowerEffect;
+    }
+
+    public boolean isBerserk() {
+        return this.berserk;
+    }
+
+    public void setBerserk(boolean berserk2) {
+        this.berserk = berserk2;
+    }
+
     public boolean isDepthStrider() {
         return this.depthStrider;
     }
@@ -1247,9 +1263,9 @@ public class MotionState {
             packetLevitationEffect = false;
         } else if (effect == PotionTypes.SLOW_FALLING) {
             slowFallingEffect = false;
-        } else if (effect == PotionTypes.CONDUIT_POWER)
-            ;
-        else if (effect == PotionTypes.DOLPHINS_GRACE) {
+        } else if (effect == PotionTypes.CONDUIT_POWER) {
+            conduitPowerEffect = false;
+        } else if (effect == PotionTypes.DOLPHINS_GRACE) {
         }
     }
 
@@ -1273,9 +1289,9 @@ public class MotionState {
             levitationAmplifier = amplifier;
         } else if (effect == PotionTypes.SLOW_FALLING) {
             slowFallingEffect = true;
-        } else if (effect == PotionTypes.CONDUIT_POWER)
-            ;
-        else if (effect == PotionTypes.DOLPHINS_GRACE) {
+        } else if (effect == PotionTypes.CONDUIT_POWER) {
+            conduitPowerEffect = true;
+        } else if (effect == PotionTypes.DOLPHINS_GRACE) {
         }
     }
 

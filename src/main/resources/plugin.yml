@@ -1,5 +1,5 @@
 name: Vulcan
-version: 2.9.7.28
+version: 2.9.7.30
 main: me.frep.vulcan.spigot.VulcanPlugin
 api-version: 1.13
 authors: [frep, GladUrBad, Joshb_, Elevated, retrooper]
