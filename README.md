@@ -1,8 +1,6 @@
 <h1 align="center">Vulcan Open Source 2.9.7.30</h1>
 
 https://discord.gg/skidsolutions
-
-From version 2.9.7.28
 ---
 Please download this before a DMCA takedown!
 
